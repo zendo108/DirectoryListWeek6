@@ -28,10 +28,37 @@ public class DirectoryList {
 		    else
 		       System.out.println("That file is not a directory.");
 		} else {
-		    files = directory.list();
-		    System.out.println("Files in directory \"" + directory + "\":");
-		    for (int i = 0; i < files.length; i++)
-		       System.out.println("   " + files[i]);
+			System.out.println("Files in directory \"" + directory + "\":");
+			int depth = 0;
+			printFiles(directory,depth);
+//		    files = directory.list();
+//		    System.out.println("Files in directory \"" + directory + "\":");
+//		    for (int i = 0; i < files.length; i++)
+//		       System.out.println("   " + files[i]);
 		}
 	} // end main()
+      
+      static void printFiles(File dir, int d) {
+    	  String[] files = dir.list();
+		    for (int i = 0; i < files.length; i++) {
+		    	//Put together path string
+		    	String subDirString = dir+"/"+files[i];
+		    	//create file with path
+		    	File f = new File(subDirString);
+		    	//test if f is folder
+		    	String tabs = "";
+		    	for(int j=0;j<d;j++) {
+		    		tabs += "  ";
+		    	}
+//		    	System.out.println(tabs + files[i] + " Folder:" + f.isDirectory());
+		    	
+		    	System.out.println(tabs+files[i]);
+		    	if(f.isDirectory())
+		    		printFiles(f,(d+1));
+		    	
+		    }
+      }
 } // end class DirectoryList
+
+
+
